@@ -1,0 +1,8 @@
+{
+  "name": "purehint",
+  "version": "0.0.0",
+  "devDependencies": {
+    "esprima": "~1.2.2",
+    "estraverse": "~1.5.1"
+  }
+}
