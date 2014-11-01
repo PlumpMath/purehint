@@ -28,29 +28,24 @@ var measure = function (tree, options) {
 		enter: function (node, parent) {
 			// mutators and loops
 			if (node.type === 'AssignmentExpression') {
-				counter.assigments.push(node.loc.start);
+				counter.assigments.push(node);
 			} else if (node.type === 'UpdateExpression') {
-				counter.updates.push(node.loc.start);
+				counter.updates.push(node);
 			} else if (node.type === 'ForStatement') {
-				counter.fors.push(node.loc.start);
+				counter.fors.push(node);
 			} else if (node.type === 'ForInStatement') {
-				counter.forIns.push(node.loc.start);
+				counter.forIns.push(node);
 			} else if (node.type === 'WhileStatement') {
-				counter.whiles.push(node.loc.start);
+				counter.whiles.push(node);
 			} else if (node.type === 'DoWhileStatement') {
-				counter.doWhiles.push(node.loc.start);
+				counter.doWhiles.push(node);
 			}
 
 			// vars are not evil, but consts are nicer
 			if (!options.allowVar &&
 				node.type === 'VariableDeclaration' &&
 				node.kind === 'var') {
-				Array.prototype.push.apply(
-					counter.vars,
-					node.declarations.map(function (declaration) {
-						return declaration.loc.start;
-					})
-				);
+				Array.prototype.push.apply(counter.vars, node.declarations);
 			}
 
 			// speculative, will give false positives
@@ -58,7 +53,7 @@ var measure = function (tree, options) {
 				node.type === 'MemberExpression' &&
 				node.property.type === 'Identifier' &&
 				ARRAY_MUTATORS.indexOf(node.property.name) !== -1) {
-				counter.arrayMethods.push(node.property.loc.start);
+				counter.arrayMethods.push(node.property);
 			}
 		}
 	});

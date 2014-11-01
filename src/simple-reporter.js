@@ -1,14 +1,30 @@
 'use strict';
 
 var MESSAGES = {
-	vars: 'Var declaration',
-	assigments: 'Assignment',
-	updates: 'Update statement',
-	fors: 'For statement',
-	forIns: 'For-in statement',
-	whiles: 'While loop',
-	doWhiles: 'Do-while loop',
-	arrayMethods: 'Array mutator'
+	vars: function (declaration) {
+		return "'" + declaration.id.name + "' variable declaration";
+	},
+	assigments: function (node) {
+		return "'" + node.operator + "' assignment";
+	},
+	updates: function (node) {
+		return "'" + node.operator + "' update statement";
+	},
+	fors: function () {
+		return 'For statement';
+	},
+	forIns: function () {
+		return 'For-in statement';
+	},
+	whiles: function () {
+		return 'While loop';
+	},
+	doWhiles: function () {
+		return 'Do-while loop';
+	},
+	arrayMethods: function (property) {
+		return "'" + property.name + "' possible array mutator";
+	}
 };
 
 var stringifyStats = function (files) {
@@ -18,7 +34,9 @@ var stringifyStats = function (files) {
 			return prev + entries.reduce(function (prev, entry) {
 				return prev +
 					file.path + ': ' +
-					'line ' + entry.line + ', col ' + entry.column + ', ' + MESSAGES[key] + '.\n';
+					'line ' + entry.loc.start.line +
+					', col ' + entry.loc.start.column +
+					', ' + MESSAGES[key](entry) + '.\n';
 			}, '');
 		}, '') + '\n';
 	}, '');
