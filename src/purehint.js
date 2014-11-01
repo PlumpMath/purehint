@@ -67,23 +67,33 @@ var measure = function (tree, options) {
 };
 
 
-var processArguments = function (args) {
+var processArguments = function (allArgs) {
 	var exit = function () {
 		console.log('Usage: node purehint.js [--allowVar] [--disallowArray] <file>');
 		process.exit(1);
 	};
 
-	if (args.length < 3 || args.length > 6) {
+	var args = allArgs.slice(2);
+
+	if (args.length < 1) {
 		exit();
 	}
 
+	var optionArray = args.filter(function (option) {
+		return option.indexOf('--') === 0;
+	});
+
+	var pathArray = args.filter(function (option) {
+		return option.indexOf('--') !== 0;
+	});
+
 	var options = {
-		allowVar: args.indexOf('--allowVar') !== -1,
-		disallowArray: args.indexOf('--disallowArray') !== -1
+		allowVar: optionArray.indexOf('--allowVar') !== -1,
+		disallowArray: optionArray.indexOf('--disallowArray') !== -1
 	};
 
 	return {
-		path: args[args.length - 1],
+		paths: pathArray,
 		options: options
 	};
 };
@@ -91,7 +101,14 @@ var processArguments = function (args) {
 
 
 var args = processArguments(process.argv);
-var code = fs.readFileSync(args.path, 'utf8');
-var tree = esprima.parse(code, { loc: true });
-var stats = measure(tree, args.options);
-simpleReporter.print([{ path: args.path, stats: stats }], args.options);
+
+var stats = args.paths.map(function (path) {
+	var code = fs.readFileSync(path, 'utf8');
+	var tree = esprima.parse(code, { loc: true });
+	return {
+		path: path,
+		stats: measure(tree, args.options)
+	};
+});
+
+simpleReporter.print(stats, args.options);

@@ -20,7 +20,7 @@ var stringifyStats = function (files) {
 					file.path + ': ' +
 					'line ' + entry.line + ', col ' + entry.column + ', ' + MESSAGES[key] + '.\n';
 			}, '');
-		}, '');
+		}, '') + '\n';
 	}, '');
 
 	var count = files.reduce(function (prev, file) {
@@ -30,7 +30,7 @@ var stringifyStats = function (files) {
 		}, 0);
 	}, 0);
 
-	return stringedStats + '\n' + count + ' errors';
+	return stringedStats + count + ' errors';
 };
 
 exports.print = function (files, options) {
