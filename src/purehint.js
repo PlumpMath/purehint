@@ -83,8 +83,9 @@ var processArguments = function (allArgs) {
 	});
 
 	var options = {
-		allowVar: optionArray.indexOf('--allowVar') !== -1,
-		disallowArray: optionArray.indexOf('--disallowArray') !== -1
+		allowVar: optionArray.indexOf('--allow-var') !== -1,
+		disallowArray: optionArray.indexOf('--disallow-array') !== -1,
+		statsOnly: optionArray.indexOf('--stats-only') !== -1
 	};
 
 	return {

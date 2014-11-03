@@ -27,19 +27,21 @@ var MESSAGES = {
 	}
 };
 
-var stringifyStats = function (files) {
-	var stringedStats = files.reduce(function (prev, file) {
-		return prev + Object.keys(file.stats).reduce(function (prev, key) {
-			var entries = file.stats[key];
-			return prev + entries.reduce(function (prev, entry) {
-				return prev +
-					file.path + ': ' +
-					'line ' + entry.loc.start.line +
-					', col ' + entry.loc.start.column +
-					', ' + MESSAGES[key](entry) + '.\n';
-			}, '');
-		}, '') + '\n';
-	}, '');
+var stringifyStats = function (files, options) {
+	if (!options.statsOnly) {
+		var stringedStats = files.reduce(function (prev, file) {
+			return prev + Object.keys(file.stats).reduce(function (prev, key) {
+					var entries = file.stats[key];
+					return prev + entries.reduce(function (prev, entry) {
+							return prev +
+								file.path + ': ' +
+								'line ' + entry.loc.start.line +
+								', col ' + entry.loc.start.column +
+								', ' + MESSAGES[key](entry) + '.\n';
+						}, '');
+				}, '') + '\n';
+		}, '');
+	}
 
 	var count = files.reduce(function (prev, file) {
 		return prev + Object.keys(file.stats).reduce(function (prev, key) {
@@ -48,7 +50,11 @@ var stringifyStats = function (files) {
 		}, 0);
 	}, 0);
 
-	return stringedStats + count + ' errors';
+	if (options.statsOnly) {
+		return count + ' errors';
+	} else {
+		return stringedStats + count + ' errors';
+	}
 };
 
 exports.print = function (files, options) {
