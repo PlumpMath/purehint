@@ -24,11 +24,26 @@ var measure = function (tree, options) {
 		arrayMethods: []
 	};
 
+	var isPrototypeAssignment = function (node) {
+		if (node.operator !== '=') { return false; }
+
+		var left = node.left;
+		if (left.type !== 'MemberExpression') { return false; }
+
+		var object = left.object, property = left.property;
+		return (property.type === 'Identifier' && property.name === 'prototype') ||
+			(object.type === 'MemberExpression' &&
+			object.property.type === 'Identifier' &&
+			object.property.name === 'prototype');
+	};
+
 	estraverse.traverse(tree, {
 		enter: function (node, parent) {
 			// mutators and loops
 			if (node.type === 'AssignmentExpression') {
-				counter.assigments.push(node);
+				if (!(options.allowPrototype && isPrototypeAssignment(node))) {
+					counter.assigments.push(node);
+				}
 			} else if (node.type === 'UpdateExpression') {
 				counter.updates.push(node);
 			} else if (node.type === 'ForStatement') {
@@ -64,7 +79,10 @@ var measure = function (tree, options) {
 
 var processArguments = function (allArgs) {
 	var exit = function () {
-		console.log('Usage: node purehint.js [--allowVar] [--disallowArray] <file>');
+		console.log(
+			'Usage: node purehint.js ' +
+			'[--allow-var] [--disallow-array] [--allow-prototype] [--stats-only] <file1> <file2> ...'
+		);
 		process.exit(1);
 	};
 
@@ -85,6 +103,7 @@ var processArguments = function (allArgs) {
 	var options = {
 		allowVar: optionArray.indexOf('--allow-var') !== -1,
 		disallowArray: optionArray.indexOf('--disallow-array') !== -1,
+		allowPrototype: optionArray.indexOf('--allow-prototype') !== -1,
 		statsOnly: optionArray.indexOf('--stats-only') !== -1
 	};
 
