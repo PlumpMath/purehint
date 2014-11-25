@@ -4,7 +4,7 @@ var MESSAGES = {
 	vars: function (declaration) {
 		return "'" + declaration.id.name + "' variable declaration";
 	},
-	assigments: function (node) {
+	assignments: function (node) {
 		return "'" + node.operator + "' assignment";
 	},
 	updates: function (node) {
