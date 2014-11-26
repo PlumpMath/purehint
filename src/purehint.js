@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var glob = require('glob');
 
 var measure = require('./measure').measure;
 var simpleReporter = require('./simple-reporter');
@@ -49,7 +50,13 @@ var processArguments = function (allArgs) {
 
 var args = processArguments(process.argv);
 
-var stats = args.paths.map(function (path) {
+var files = [];
+
+args.paths.forEach(function (pattern) {
+	Array.prototype.push.apply(files, glob.sync(pattern));
+});
+
+var stats = files.map(function (path) {
 	var code = fs.readFileSync(path, 'utf8');
 
 	return {
