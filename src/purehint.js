@@ -10,12 +10,14 @@ var simpleReporter = require('./simple-reporter');
 var processArguments = function (allArgs) {
 	var exit = function () {
 		console.log(
-			'Usage: node purehint.js ' +
-			'[--allow-var] ' +
-			'[--disallow-array] ' +
-			'[--disallow-prototype] ' +
-			'[--stats-only] ' +
-			'<file1> <file2> ...'
+			'usage: node purehint.js [option1] [option2] ... <file1> <file2> ...\n' +
+			'\n' +
+			'where option may be one of:\n' +
+			' --allow-var\n' +
+			' --disallow-array\n' +
+			' --disallow-prototype\n' +
+			' --disallow-exports\n' +
+			' --stats-only'
 		);
 		process.exit(1);
 	};
@@ -38,6 +40,7 @@ var processArguments = function (allArgs) {
 		allowVar: optionArray.indexOf('--allow-var') !== -1,
 		disallowArray: optionArray.indexOf('--disallow-array') !== -1,
 		disallowPrototype: optionArray.indexOf('--disallow-prototype') !== -1,
+		disallowExports: optionArray.indexOf('--disallow-exports') !== -1,
 		statsOnly: optionArray.indexOf('--stats-only') !== -1
 	};
 

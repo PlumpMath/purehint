@@ -11,6 +11,7 @@ Where *option* can be one of:
 
  + `--allow-var` - ignores *var* declarations. *Const* declarations are preferred to *vars*
  + `--disallow-prototype` - emits errors for assignments to prototypes
+ + `--disallow-exports` - emits errors for assignments to the exports object
  + `--disallow-array` - emits errors for every method call that might be an array mutator (*push*, *pop*, *sort*, etc).
- These warnings are disabled by default as they are highly speculative.
+ These warnings are disabled by default as they are highly speculative
  + `--stats-only` - suppresses the full log and only counts the number of errors

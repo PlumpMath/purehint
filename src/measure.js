@@ -19,24 +19,35 @@ var measureTree = function (tree, options) {
         arrayMethods: []
     };
 
-    var isPrototypeAssignment = function (node) {
-        if (node.operator !== '=') { return false; }
 
-        var left = node.left;
-        if (left.type !== 'MemberExpression') { return false; }
+    var isMemberAssignment = function (member) {
+        return function (node) {
+            if (node.operator !== '=') { return false; }
+            var left = node.left;
 
-        var object = left.object, property = left.property;
-        return (property.type === 'Identifier' && property.name === 'prototype') ||
-            (object.type === 'MemberExpression' &&
-            object.property.type === 'Identifier' &&
-            object.property.name === 'prototype');
+            if (left.type !== 'MemberExpression') { return false; }
+            var object = left.object, property = left.property;
+
+            return (property.type === 'Identifier' && property.name === member) ||
+                (object.type === 'MemberExpression' &&
+                object.property.type === 'Identifier' &&
+                object.property.name === member);
+        };
     };
+
+    var isPrototypeAssignment = isMemberAssignment('prototype');
+    var isExportsAssignment = isMemberAssignment('exports');
 
     estraverse.traverse(tree, {
         enter: function (node, parent) {
             // mutators and loops
             if (node.type === 'AssignmentExpression') {
-                if (options.disallowPrototype || !isPrototypeAssignment(node)) {
+                var isPrototype = isPrototypeAssignment(node);
+                var isExports = isExportsAssignment(node);
+
+                if ((!isExports && !isPrototype) ||
+                    (options.disallowPrototype && isPrototype) ||
+                    (options.disallowExports && isExports)) {
                     counter.assignments.push(node);
                 }
             } else if (node.type === 'UpdateExpression') {

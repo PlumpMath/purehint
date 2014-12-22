@@ -57,6 +57,6 @@ var stringifyStats = function (files, options) {
 	}
 };
 
-exports.print = function (files, options) {
+module.exports.print = function (files, options) {
 	console.log(stringifyStats(files, options));
 };
