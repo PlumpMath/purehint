@@ -1,0 +1,33 @@
+body {
+    background-color: hsl(79, 15%, 7%);
+    color: white;
+}
+
+.container {
+    position: relative;
+    margin-top: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 768px;
+}
+
+.title {
+    font-family: 'Lobster', cursive;
+    font-size: xx-large;
+    margin-bottom: 8px;
+}
+
+#editor {
+    position: relative;
+    width: 768px;
+    height: 384px;
+}
+
+.column {
+    font-family: "Georgia", serif;
+    display: inline-block;
+    position: relative;
+    width: 384px;
+    vertical-align: text-top;
+    margin-top: 12px;
+}
