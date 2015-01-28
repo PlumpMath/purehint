@@ -3,6 +3,8 @@ PureHint
 
 Analyses JavaScript code for side-effecting statements.
 
+[Online demo](http://madflame991.github.io/purehint/examples/browser/browser.html)
+
 ####Usage
 
 `node purehint.js [option1] [option2] ... <file1> <file2> ...`
