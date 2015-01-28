@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="browser.css">
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <title>Purehint demo</title>
+</head>
+<body ng-app="Purehint">
+    <div class="container" ng-controller="PurehintController as purehintController">
+        <div class="title">purehint</div>
+        <div id="editor"></div>
+
+        <div class="column">
+            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.allowVar">Allow vars</div>
+            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowArray">Disallow array mutators</div>
+            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowPrototype">Disallow assignments to prototype</div>
+            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowExports">Disallow assignments to exports</div>
+        </div><div class="column">
+            <div>Vars: {{purehintController.stats.vars}}</div>
+            <div>Assignments: {{purehintController.stats.assignments}}</div>
+            <div>Updates: {{purehintController.stats.updates}}</div>
+            <div>Fors: {{purehintController.stats.fors}}</div>
+            <div>ForIns: {{purehintController.stats.forIns}}</div>
+            <div>Whiles: {{purehintController.stats.whiles}}</div>
+            <div>DoWhiles: {{purehintController.stats.doWhiles}}</div>
+            <div>ArrayMethods: {{purehintController.stats.arrayMethods}}</div>
+        </div>
+    </div>
+
+    <script src="../lib/angular.min.js"></script>
+
+    <script src="../lib/ace/ace.js"></script>
+    <script src="../lib/ace/theme-monokai.js"></script>
+    <script src="../lib/ace/mode-javascript.js"></script>
+    <script src="../lib/ace/worker-javascript.js"></script>
+
+    <script src="bundle.js"></script>
+</body>
+</html>
