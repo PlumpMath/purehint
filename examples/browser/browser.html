@@ -10,14 +10,14 @@
     <div class="container" ng-controller="PurehintController as purehintController">
         <div class="title">purehint</div>
         <div id="editor"></div>
-
-        <div class="column">
-            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.allowVar">Allow vars</div>
-            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowArray">Disallow array mutators</div>
-            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowPrototype">Disallow assignments to prototype</div>
-            <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowExports">Disallow assignments to exports</div>
-        </div><!--
-        --><div class="column">
+        <div class="sidebar">
+            <div class="options">
+                <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.allowVar">Allow vars</div>
+                <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowArray">Disallow array mutators</div>
+                <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowPrototype">Disallow assignments to prototype</div>
+                <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowExports">Disallow assignments to exports</div>
+            </div><!--
+            --><div>
             <table class="stats">
                 <tr><td>Vars</td><td>{{purehintController.stats.vars}}</td></tr>
                 <tr><td>Assignments</td><td>{{purehintController.stats.assignments}}</td></tr>
@@ -31,6 +31,7 @@
         </div>
     </div>
 
+    </div>
     <script src="../lib/angular.min.js"></script>
 
     <script src="../lib/ace/ace.js"></script>
