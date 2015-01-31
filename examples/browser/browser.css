@@ -31,3 +31,11 @@ body {
     vertical-align: text-top;
     margin-top: 12px;
 }
+
+.stats {
+    width: 192px;
+}
+
+td:nth-child(2) {
+    text-align: right;
+}
