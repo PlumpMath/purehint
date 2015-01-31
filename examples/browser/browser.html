@@ -16,15 +16,18 @@
             <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowArray">Disallow array mutators</div>
             <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowPrototype">Disallow assignments to prototype</div>
             <div><input type="checkbox" ng-change="purehintController.reflow()" ng-model="purehintController.options.disallowExports">Disallow assignments to exports</div>
-        </div><div class="column">
-            <div>Vars: {{purehintController.stats.vars}}</div>
-            <div>Assignments: {{purehintController.stats.assignments}}</div>
-            <div>Updates: {{purehintController.stats.updates}}</div>
-            <div>Fors: {{purehintController.stats.fors}}</div>
-            <div>ForIns: {{purehintController.stats.forIns}}</div>
-            <div>Whiles: {{purehintController.stats.whiles}}</div>
-            <div>DoWhiles: {{purehintController.stats.doWhiles}}</div>
-            <div>ArrayMethods: {{purehintController.stats.arrayMethods}}</div>
+        </div><!--
+        --><div class="column">
+            <table class="stats">
+                <tr><td>Vars</td><td>{{purehintController.stats.vars}}</td></tr>
+                <tr><td>Assignments</td><td>{{purehintController.stats.assignments}}</td></tr>
+                <tr><td>Updates</td><td>{{purehintController.stats.updates}}</td></tr>
+                <tr><td>Fors</td><td>{{purehintController.stats.fors}}</td></tr>
+                <tr><td>For ins</td><td>{{purehintController.stats.forIns}}</td></tr>
+                <tr><td>Whiles</td><td>{{purehintController.stats.whiles}}</td></tr>
+                <tr><td>Do whiles</td><td>{{purehintController.stats.doWhiles}}</td></tr>
+                <tr><td>Array methods</td><td>{{purehintController.stats.arrayMethods}}</td></tr>
+            </table>
         </div>
     </div>
 
