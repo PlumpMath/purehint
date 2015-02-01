@@ -17,6 +17,7 @@ var processArguments = function (allArgs) {
 			' --disallow-array\n' +
 			' --disallow-prototype\n' +
 			' --disallow-exports\n' +
+			' --disallow-window\n' +
 			' --stats-only'
 		);
 		process.exit(1);
@@ -41,6 +42,7 @@ var processArguments = function (allArgs) {
 		disallowArray: optionArray.indexOf('--disallow-array') !== -1,
 		disallowPrototype: optionArray.indexOf('--disallow-prototype') !== -1,
 		disallowExports: optionArray.indexOf('--disallow-exports') !== -1,
+		disallowWindow: optionArray.indexOf('--disallow-window') !== -1,
 		statsOnly: optionArray.indexOf('--stats-only') !== -1
 	};
 

@@ -60,4 +60,18 @@ describe('measure', function () {
             expect(counter.assignments.length).toEqual(1);
         });
     });
+
+    describe('window', function () {
+        it('ignores assignments to window members', function () {
+            var code = 'window.a = function () {};';
+            var counter = measure(code, { disallowWindow: false });
+            expect(counter.assignments.length).toEqual(0);
+        });
+
+        it('collects assignments to window members', function () {
+            var code = 'window.a = function () {};';
+            var counter = measure(code, { disallowWindow: true });
+            expect(counter.assignments.length).toEqual(1);
+        });
+    });
 });
