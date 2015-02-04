@@ -9,7 +9,8 @@ angular.module('Purehint', [])
         allowVar: false,
         disallowArray: false,
         disallowPrototype: false,
-        disallowExports: false
+        disallowExports: false,
+        disallowWindow: false
     };
 
     this.stats = {
@@ -4580,6 +4581,15 @@ var measureTree = function (tree, options) {
         arrayMethods: []
     };
 
+    var isWindowAssignment = function (node) {
+        if (node.operator !== '=') { return false; }
+        var left = node.left;
+
+        if (left.type !== 'MemberExpression') { return false; }
+        var object = left.object;
+
+        return object.type === 'Identifier' && object.name === 'window';
+    };
 
     var isMemberAssignment = function (member) {
         return function (node) {
@@ -4605,10 +4615,12 @@ var measureTree = function (tree, options) {
             if (node.type === 'AssignmentExpression') {
                 var isPrototype = isPrototypeAssignment(node);
                 var isExports = isExportsAssignment(node);
+                var isWindow = isWindowAssignment(node);
 
-                if ((!isExports && !isPrototype) ||
+                if ((!isExports && !isPrototype && !isWindow) ||
                     (options.disallowPrototype && isPrototype) ||
-                    (options.disallowExports && isExports)) {
+                    (options.disallowExports && isExports) ||
+                    (options.disallowWindow && isWindow)) {
                     counter.assignments.push(node);
                 }
             } else if (node.type === 'UpdateExpression') {
