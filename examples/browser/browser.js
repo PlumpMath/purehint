@@ -8,7 +8,8 @@ angular.module('Purehint', [])
         allowVar: false,
         disallowArray: false,
         disallowPrototype: false,
-        disallowExports: false
+        disallowExports: false,
+        disallowWindow: false
     };
 
     this.stats = {
