@@ -4,7 +4,13 @@
 var measure = require('../../src/measure').measure;
 
 angular.module('Purehint', [])
-.controller('PurehintController', ['$scope', function ($scope) {
+.controller('PurehintController', [
+    '$scope',
+    '$http',
+function (
+    $scope,
+    $http
+) {
     this.options = {
         allowVar: false,
         disallowArray: false,
@@ -107,8 +113,18 @@ angular.module('Purehint', [])
         editor.getSession().setUseWorker(false);
     }
 
-    setupEditor();
+    function getSampleProgram() {
+        $http.get('./sample-impure-code.js').
+            success(function(data, status, headers, config) {
+                editor.setValue(data, -1);
+            }).
+            error(function(data, status, headers, config) {
+                console.warn('Could not retrieve sample program');
+            });
+    }
 
+    setupEditor();
+    getSampleProgram();
 }]);
 },{"../../src/measure":4}],2:[function(require,module,exports){
 /*
