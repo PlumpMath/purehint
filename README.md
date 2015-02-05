@@ -3,7 +3,7 @@ PureHint
 
 Analyses JavaScript code for side-effecting statements.
 
-[Online demo](http://madflame991.github.io/purehint/examples/browser/browser.html)
+[Online demo](http://adrianton3.github.io/purehint/examples/browser/browser.html)
 
 ####Usage
 
